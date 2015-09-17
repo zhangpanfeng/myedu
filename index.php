@@ -11,5 +11,3 @@ $app->get ( '/school/:id', function ($id) {
 } );
 
 $app->run ();
-
-
