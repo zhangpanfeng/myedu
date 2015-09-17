@@ -1,2 +1,2 @@
-# myedu
-Hackathon project
+# myedu_rest
+Hackathon restful api project
