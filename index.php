@@ -26,9 +26,16 @@ $app->get ( '/', function () {
     }
 } );
 
-$app->get ( '/hello/:name', function ($name) {
-    echo "Hello, $name";
+$app->get ( '/school/:id', function ($id) {
+    $sql = "select * from school_course where school_id=:id";
+    $pdo = getConnect ();
+    $st = $pdo->prepare($sql);
+    $st->bindParam(":id",$id);
+    $result = $st->execute();
+    $row = $st->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($row);
 } );
+
 
 // POST route
 $app->post ( '/post', function () {
