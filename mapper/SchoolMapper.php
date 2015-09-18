@@ -1,23 +1,19 @@
 <?php
 require_once 'utils/DB.php';
-class CourseMapper {
+class SchoolMapper {
     
     /**
      *
-     * @param
-     *            $school_id
-     * @return
+     * @return all schools
      *
      */
-    public static function selectCourseBySchoolId($school_id) {
+    public static function selectAllSchools() {
         $sql = "	select * " .
-        		"	from school_course sc, semester s " .
-        		"	where sc.semester_id=s.semester_id " .
-        		"	and s.school_id=:id ";
+        		"	from school " .
+        		"	order by name ASC";
         try {
             $conn = DB::getConnect ();
             $stmt = $conn->prepare ( $sql );
-            $stmt->bindParam ( "id", $school_id );
             $stmt->execute ();
             $row = $stmt->fetchAll ( PDO::FETCH_ASSOC );
             $conn = null;
@@ -29,20 +25,14 @@ class CourseMapper {
         }
     }
     
-    public static function selectSemesterBySchoolIdYearSem($school_id, $year, $sem) {
-        $sql = "	select * " .
-        		"	from school_course sc, semester s " .
-        		"	where sc.semester_id=s.semester_id " .
-        		"	and s.school_id=:sid " .
-        		"	and s.year=:year" .
-        		"	and s.semester =:sem";
+    public static function selectAllDeptsBySchoolId($school_id) {
+       	$sql = "	select dept_name " .
+        		"	from dept " .
+        		"	where school_id=:sid ";
         try {
-        	echo $year;
             $conn = DB::getConnect ();
             $stmt = $conn->prepare ( $sql );
             $stmt->bindParam ( "sid", $school_id);
-            $stmt->bindParam ( "year", $year );
-            $stmt->bindParam ( "sem", $sem );
             $stmt->execute ();
             $row = $stmt->fetchAll ( PDO::FETCH_ASSOC );
             $conn = null;
